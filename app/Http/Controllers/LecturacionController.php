@@ -21,6 +21,7 @@ class LecturacionController extends Controller
     public function index()
     {
         //
+        return view('lecturacion.index');
     }
 
     /**
