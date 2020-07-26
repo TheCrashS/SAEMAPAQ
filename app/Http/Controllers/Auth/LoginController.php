@@ -40,7 +40,7 @@ class LoginController extends Controller
     }
 
 
-    protected function redirect()
+    protected function redirectTo()
     {
         if (Auth::user()->role_id == 1)
             return '/home';

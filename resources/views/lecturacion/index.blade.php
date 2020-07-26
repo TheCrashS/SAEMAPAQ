@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('Lecturacion') }}</div>
 
                 <div class="card-body">
-                    <form method="POST">
+                    <form method="GET" action="{{ route('lecturacion.index')}} ">
                         @csrf
 
                         <div class="form-group row">
@@ -28,7 +28,7 @@
                             </div>
                         </div>
                     </form>
-                    <form method="POST" action="{{ route('lecturacion') }}">
+                    <form method="POST" action="{{ route('lecturacion.index') }}">
                         @csrf
 
                         <div class="form-group row">
