@@ -1,0 +1,10 @@
+tomposer
+
+php >= 7.2.5
+
+NodeJS
+
+_______________________________________________
+
+todo eso para poder usar los comandos por consola,
+cada uno tener su referencia a variables de sistema.

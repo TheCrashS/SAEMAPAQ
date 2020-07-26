@@ -21,7 +21,7 @@ class ParametroController extends Controller
 
     public function index()
     {
-        //
+        return view('parametro.index');
     }
 
     /**

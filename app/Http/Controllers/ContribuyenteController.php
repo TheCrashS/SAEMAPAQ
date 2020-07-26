@@ -17,9 +17,11 @@ class ContribuyenteController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Request $request)
     {
         //
+        $contris = Contribuyente::where('nombres','LIKE','%'.$request->nombres.'%')->orderBy('id','ASC')->paginate(10);
+        return view('contribuyente.index')->with('contris',$contris);
     }
 
     /**
@@ -30,6 +32,15 @@ class ContribuyenteController extends Controller
     public function create()
     {
         //
+        /* $table->string('nombres');
+        $table->string('apellidos');
+        $table->integer('ci');
+        $table->dateTime('fecha_nac');
+        $table->integer('telefono');
+        $table->string('direccion');
+        $table->boolean('estado')->default(true); */
+
+        return view('contribuyente.create');
     }
 
     /**
@@ -52,6 +63,7 @@ class ContribuyenteController extends Controller
     public function show(Contribuyente $contribuyente)
     {
         //
+        return view('contribuyente.show');
     }
 
     /**
@@ -63,6 +75,9 @@ class ContribuyenteController extends Controller
     public function edit(Contribuyente $contribuyente)
     {
         //
+        //$contri = $contribuyente;  //test1
+        $contri = Contribuyente::find($contribuyente->id);  //test2
+        return view('contribuyente.edit')->with('contri',$contri);
     }
 
     /**
