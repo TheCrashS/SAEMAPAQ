@@ -15,12 +15,13 @@ class ContribuyenteController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('contribuyente');
     }
 
     public function index(Request $request)
     {
         //
-        $contris = Contribuyente::where('nombres','LIKE','%'.$request->nombres.'%')->orderBy('id','ASC')->paginate(10);
+        $contris = Contribuyente::where('ci','LIKE','%'.$request->ci.'%')->orderBy('id','ASC')->paginate(10);
         return view('contribuyente.index')->with('contris',$contris);
     }
 

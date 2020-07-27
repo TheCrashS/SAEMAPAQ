@@ -28,7 +28,7 @@ Route::resource('parametro','ParametroController');
 Route::get('/cobro/pagar/{cobro}','CobroController@pagar')->name('cobro.pagar');
 Route::get('/cobro/pdf/{cobro}','CobroController@pdf')->name('cobro.pdf');
 //Route::post('/cobro/update/{cobro}','CobroController@update')->name('cobro.update');
-Route::resource('cobro', 'CobroController');
+Route::resource('cobro', 'CobroController')->middleware('cobro');
 //Route::post('/cobro/update/{cobro}','CobroController@update')->name('cobro.update');
 
 //rutas generadas para la autenticación

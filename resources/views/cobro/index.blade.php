@@ -69,9 +69,14 @@
                                         </td>
                                         <td>
                                             <div style="width: 132px;">
-                                                <button type="button" class="btn btn-success btn-sm" id="modalB" data-toggle="modal" data-target="#confirmar_{{$cobro->id}}">
-                                                    <span style="color:white">{{ __('Pagar') }}&nbsp;<i class="fas fa-hand-holding-usd fa-lg"></i></span>
-                                                </button>
+                                                @if ($cobro->estado_pago == '1')
+                                                <a href="{{ route('cobro.pdf',$cobro->id) }}" target="_blank" class="btn btn-primary btn-sm"><span style="color:white"><i class="fas fa-file-pdf fa-lg fa-fw"></i></span></a>
+                                                @else
+                                                    <button type="button" class="btn btn-success btn-sm" id="modalB" data-toggle="modal" data-target="#confirmar_{{$cobro->id}}">
+                                                        <span style="color:white">{{ __('Pagar') }}&nbsp;<i class="fas fa-hand-holding-usd fa-lg"></i></span>
+                                                    </button>
+                                                @endif
+
                                                 {{-- <a href="{{route('cobro.show',$cobro->id)}}" class="btn btn-info btn-sm"><span style="color:white"><i class="far fa-eye fa-lg fa-fw"></i></span></a>&nbsp;
                                                 <a href="{{route('cobro.edit',$cobro)}}" class="btn btn-warning btn-sm"><span style="color:white"><i class="fas fa-edit fa-lg fa-fw"></i></span></a> --}}
                                                 {{-- &nbsp;<a href="{{ route('cobro.pdf',$cobro->id) }}" target="_blank" class="btn btn-secondary btn-sm"><span style="color:white"><i class="fas fa-file-pdf fa-lg fa-fw"></i></span></a> --}}
@@ -113,7 +118,7 @@
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Cancel') }}</button>
                                                     <a href="{{ route('cobro.pdf',$cobro->id) }}" target="_blank" class="btn btn-primary"><span style="color:white"><i class="fas fa-file-pdf fa-lg fa-fw"></i></span></a>
-                                                    <a href="{{ route('cobro.pagar',$cobro->id) }}" target="_blank" class="btn btn-success"><span style="color:white"> <strong>PAGO</strong>&nbsp;<i class="fas fa-hand-holding-usd fa-lg fa-fw"></i></span></a>
+                                                    <a href="{{ route('cobro.pagar',$cobro->id) }}" class="btn btn-success"><span style="color:white"> <strong>PAGO</strong>&nbsp;<i class="fas fa-hand-holding-usd fa-lg fa-fw"></i></span></a>
                                                 </div>
                                             </div>
                                         </div>

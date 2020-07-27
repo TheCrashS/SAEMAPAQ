@@ -81,7 +81,27 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
+
+                                    @if (Auth::user()->role_id == 1)
+                                        <a class="dropdown-item" href="{{ route('user.index') }}">
+                                            {{ __('User') }}
+                                        </a>
+                                        <a class="dropdown-item" href="{{ route('lecturacion.index') }}">
+                                            {{ __('Lecturación') }}
+                                        </a>
+                                        <a class="dropdown-item" href="{{ route('cobro.index') }}">
+                                            {{ __('Cobro') }}
+                                        </a>
+                                        <a class="dropdown-item" href="{{ route('contribuyente.index') }}">
+                                            {{ __('Contribuyente') }}
+                                        </a>
+                                        <a class="dropdown-item" href="{{ route('parametro.index') }}">
+                                            {{ __('Parametros') }}
+                                        </a>
+                                        <hr>
+                                    @endif
+
+                                    <a class="dropdown-item badge-danger" href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
                                                     document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
@@ -92,6 +112,7 @@
                                     </form>
                                 </div>
                             </li>
+
                         @endauth
                     </ul>
                 </div>

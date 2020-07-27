@@ -9,28 +9,27 @@
 
                 <div class="card-body">
                     @include('flash::message')
-
-                    <hr>
                     <form method="POST" action="{{ route('lecturacion.create') }}">
                         @csrf
                         <div class="form-group row">
                             <label for="n_cc" class="col-md-4 col-form-label text-md-right">{{ __('Codigo del medidor') }}</label>
 
                             <div class="col-md-6">
-                                <input id="n_cc" type="text" class="form-control{{ $errors->has('codigo') ? ' is-invalid' : '' }}" name="codigo" value="{{ old('codigo') }}" required autofocus>
+                                <div class="input-group{{ $errors->has('codigo') ? ' has-error' : '' }}">
+                                <input id="n_cc" type="text" class="form-control {{ $errors->has('codigo') ? ' is-invalid' : '' }}" name="codigo" value="{{ old('codigo') }}" required autofocus>
                                 @if ($errors->has('codigo'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('codigo') }}</strong>
                                     </span>
                                 @endif
+
+                                <span class="input-group-append">
+                                    <button class="btn btn-warning" type="submit">
+                                        <i class="fas fa-search fa-fw"></i>
+                                    </button>
+                                </span>
+                                </div>
                             </div>
-                            <div class="form-group row mb-0">
-                            <div class="col-md-2 offset-md-4">
-                                <button id="enviar" type="submit" class="btn btn-primary">
-                                    <i class="fas fa-save fa-lg"></i>&nbsp;{{ ('Buscar') }}
-                                </button>
-                            </div>
-                        </div>
                         </div>
 
                         <div class="form-group row">

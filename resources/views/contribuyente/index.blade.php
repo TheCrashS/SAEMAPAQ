@@ -40,36 +40,36 @@
                     </div>
                     <hr>
                     <div class="text-right text-info">
-                        {!!$contris->total()!!} {{ __('Register') }}s
+                        {!!$contris->total()!!} {{ __('Contribuyentes') }}
                     </div>
                     <div class="table-responsive">
                         <table class="table table-sm table-striped table-hover">
                             <thead>
                                 <th class="text-capitalize " scope="col">{{ __('ID') }}</th>
                                 <th class="text-capitalize " scope="col">{{ __('CI') }}</th>
+                                <th class="text-capitalize " scope="col">{{ __('Nombres') }}</th>
+                                <th class="text-capitalize " scope="col">{{ __('Apellidos') }}</th>
                                 <th class="text-capitalize " scope="col">{{ __('Estado') }}</th>
                                 <th class="text-capitalize " scope="col">{{ __('Acciones') }}</th>
                             </thead>
                             <tbody>
                                 @foreach ($contris as $contri)
                                     <tr>
-                                        <th scope="row">{{ $correo->id}}</th>
-                                        <td>{{ $contri->n_cc }}</td>
+                                        <th scope="row">{{ $contri->id}}</th>
+                                        <td>{{ $contri->ci }}</td>
+                                        <td>{{ $contri->nombres }}</td>
+                                        <td>{{ $contri->apellidos }}</td>
                                         <td>
                                             @if ($contri->estado == '1')
-                                                <span class="badge badge-warning" >{{ __('Enabled') }}</span>
+                                                <span class="badge badge-success" >{{ __('Enabled') }}</span>
                                             @else
-                                                <span class="badge badge-success" >{{ __('Disabled') }}</span>
+                                                <span class="badge badge-danger" >{{ __('Disabled') }}</span>
                                             @endif
                                         </td>
                                         <td>
                                             <div style="width: 132px;">
-                                                <a href="{{route('contribuyente.show',$correo->id)}}" class="btn btn-info btn-sm"><span style="color:white"><i class="far fa-eye fa-lg fa-fw"></i></span></a>&nbsp;
-                                                <a href="{{route('contribuyente.edit',$correo)}}" class="btn btn-warning btn-sm"><span style="color:white"><i class="fas fa-edit fa-lg fa-fw"></i></span></a>
-                                                {{-- @if ($correo->correspondencia->registro_id != 1 ) --}}
-                                                @if ($correo->registro_id != 1 )
-                                                    &nbsp;<a href="{{ route('contribuyente.pdf',$correo->id) }}" target="_blank" class="btn btn-secondary btn-sm"><span style="color:white"><i class="fas fa-file-pdf fa-lg fa-fw"></i></span></a>
-                                                @endif
+                                                <a href="{{route('contribuyente.show',$contri->id)}}" class="btn btn-info btn-sm"><span style="color:white"><i class="far fa-eye fa-lg fa-fw"></i></span></a>&nbsp;
+                                                <a href="{{route('contribuyente.edit',$contri)}}" class="btn btn-warning btn-sm"><span style="color:white"><i class="fas fa-edit fa-lg fa-fw"></i></span></a>
                                             </div>
                                         </td>
                                     </tr>
@@ -79,7 +79,6 @@
                     </div>
 
                     <div class="text-center">
-                        {{-- {!! $users->render() !!} --}}
                         {!! $contris->links() !!}
                     </div>
                     <div class="text-center">

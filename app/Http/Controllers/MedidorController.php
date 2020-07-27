@@ -18,11 +18,15 @@ class MedidorController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('medidor');
     }
 
-    public function index()
+    public function index(Request $request)
     {
         //
+        $medidor = Medidor::where('codigo','LIKE','%'.$request->codigo.'%')->orderBy('id','ASC')->paginate(10);
+
+        return view('medidor.index')->with('contris',$medidor);
     }
 
     /**
@@ -33,6 +37,7 @@ class MedidorController extends Controller
     public function create()
     {
         //
+        return view('medidor.create');
     }
 
     /**

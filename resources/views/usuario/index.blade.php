@@ -28,6 +28,39 @@
       <ul class="dropdown-menu">
         <li><a href="#"><i class="icon-user"></i> Mi perfil</a></li>
 
+        <li >
+
+
+                @if (Auth::user()->role_id == 1)
+                    <a class="dropdown-item" href="{{ route('user.index') }}">
+                        {{ __('User') }}
+                    </a>
+                    <a class="dropdown-item" href="{{ route('lecturacion.index') }}">
+                        {{ __('Lecturación') }}
+                    </a>
+                    <a class="dropdown-item" href="{{ route('cobro.index') }}">
+                        {{ __('Cobro') }}
+                    </a>
+                    <a class="dropdown-item" href="{{ route('contribuyente.index') }}">
+                        {{ __('Contribuyente') }}
+                    </a>
+                    <a class="dropdown-item" href="{{ route('parametro.index') }}">
+                        {{ __('Parametros') }}
+                    </a>
+                    <hr>
+                @endif
+
+                <a class="dropdown-item badge-danger" href="{{ route('logout') }}"
+                onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">
+                    {{ __('Logout') }}
+                </a>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+        </li>
+
         <li class="divider"></li>
 
         <li><a href="#"  onclick="enviar_formulario();"><i class="icon-key"></i> Cerrar sesion</a></li>
