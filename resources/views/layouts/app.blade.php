@@ -98,6 +98,18 @@
                                         <a class="dropdown-item" href="{{ route('parametro.index') }}">
                                             {{ __('Parametros') }}
                                         </a>
+                                        <a class="dropdown-item" href="{{ route('medidor.index') }}">
+                                            {{ __('Medidor') }}
+                                        </a>
+                                        <hr>
+                                    @endif
+                                    @if (Auth::user()->role_id == 5)
+                                        <a class="dropdown-item" href="{{ route('lecturacion.index') }}">
+                                            {{ __('Lecturación') }}
+                                        </a>
+                                        <a class="dropdown-item" href="{{ route('medidor.index') }}">
+                                            {{ __('Medidor') }}
+                                        </a>
                                         <hr>
                                     @endif
 

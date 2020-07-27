@@ -47,8 +47,8 @@
                         <table class="table table-sm table-striped table-hover">
                             <thead>
                             <th class="text-capitalize " scope="col">{{ __('ID') }}</th>
-                                <th class="text-capitalize " scope="col">{{ __('Codigo Medidor') }}</th>
-                                <th class="text-capitalize " scope="col">{{ __('Direccion') }}</th>
+                                <th class="text-capitalize " scope="col">{{ __('Código Medidor') }}</th>
+                                <th class="text-capitalize " scope="col">{{ __('Dirección') }}</th>
                                 <th class="text-capitalize " scope="col">{{ __('Categoria') }}</th>
                                 <th class="text-capitalize " scope="col">{{ __('Contribuyente CI') }}</th>
                                 <th class="text-capitalize " scope="col">{{ __('Estado') }}</th>

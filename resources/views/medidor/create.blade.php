@@ -45,31 +45,20 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="contribuyente" class="col-md-4 col-form-label text-md-right">{{ __('Categoria') }}</label>
+                            <label for="estado" class="col-md-4 col-form-label text-md-right">{{ __('Categoria') }}</label>
 
                             <div class="col-md-6">
-                                <input id="categoria" type="text" class="form-control{{ $errors->has('categoria') ? ' is-invalid' : '' }}" name="categoria" value="{{ old('categoria') }}" >
-                                @if ($errors->has('categoria'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('categoria') }}</strong>
-                                    </span>
-                                @endif
+                                {!! Form::select('estado_id', ['Domiciliar','2'], 'Domiciliar', ['class' => "form-control $errors->has('estado_id') ? ' is-invalid' : '' ",'required' => true]) !!}
                             </div>
                         </div>
+
                         <div class="form-group row">
-                            <label for="contribuyente" class="col-md-4 col-form-label text-md-right">{{ __('Contribuyente') }}</label>
+                            <label for="estado" class="col-md-4 col-form-label text-md-right">{{ __('Contribuyente') }}</label>
 
                             <div class="col-md-6">
-                                <input id="contribuyente" type="text" class="form-control{{ $errors->has('contribuyente') ? ' is-invalid' : '' }}" name="contribuyente" value="{{ old('contribuyente') }}" >
-                                @if ($errors->has('contribuyente'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('contribuyente') }}</strong>
-                                    </span>
-                                @endif
+                                {!! Form::select('estado_id', ['Mario','2'], 'Mario', ['class' => "form-control $errors->has('estado_id') ? ' is-invalid' : '' ",'required' => true]) !!}
                             </div>
                         </div>
-
-
 
                         <div class="form-group row">
                             <label for="estado" class="col-md-4 col-form-label text-md-right">{{ __('Estado') }}</label>
