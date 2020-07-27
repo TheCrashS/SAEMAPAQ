@@ -18,8 +18,8 @@ class CreateLecturacionsTable extends Migration
             $table->dateTime('fecha_lectura')->default(now()->toDateString());
             $table->double('consumo')->default(1);
             $table->bigInteger('medidor_id')->unsigned();
-            $table->double('monto');
-            $table->dateTime('fecha_cobro')->default(now()->toDateString());
+            $table->double('monto')->default(0);
+            $table->dateTime('fecha_cobro')->nullable()->default(now()->toDateString());
             $table->boolean('estado_pago')->default(false);
 
             $table->foreign('medidor_id')->references('id')->on('medidors');

@@ -12,8 +12,8 @@
 <link rel="stylesheet" href="{{ asset('css/usuario/matrix-media.css') }}" />
 <link href="{{ asset('css/usuario/font/font-awesome.css') }}" rel="stylesheet" />
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
-</head>
-<body>
+<link rel="stylesheet" href="{{ asset('css/usuario/fullcalendar.css') }}" />
+
 
 <!--Header-part-->
 <div id="header">
@@ -29,15 +29,24 @@
         <li><a href="#"><i class="icon-user"></i> Mi perfil</a></li>
 
         <li class="divider"></li>
-        <li><a href="login.html"><i class="icon-key"></i> Cerrar sesion</a></li>
+
+        <li><a href="#"  onclick="enviar_formulario();"><i class="icon-key"></i> Cerrar sesion</a></li>
       </ul>
     </li>
 
-    <li class=""><a title="" href="login.html"><i class="icon icon-share-alt"></i> <span class="text">Cerrar sesion</span></a></li>
+    <li class=""><a title="" href="#" onclick="enviar_formulario();"><i class="icon icon-share-alt">
+    </i> <span class="text">Cerrar sesion</span></a></li>
   </ul>
 </div>
 
-
+<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+    @csrf
+</form>
+<script>
+function enviar_formulario(){
+   document.getElementById('logout-form').submit();
+}
+</script>
 
 <!--sidebar-menu-->
 
@@ -251,13 +260,16 @@
   </div>
 </div>
 <!--end-Footer-part-->
-<script src="{{ asset('js/usuario/jquery.min.js') }}"></script>
-<script src="{{ asset('js/usuario/jquery.ui.custom.js') }}"></script>
-<script src="{{ asset('js/usuario/bootstrap.min.js') }}"></script>
-<script src="{{ asset('js/usuario/jquery.uniform.js') }}"></script>
-<script src="{{ asset('js/usuario/select2.min.js') }}"></script>
-<script src="{{ asset('js/usuario/jquery.dataTables.min.js') }}"></script>
-<script src="{{ asset('js/usuario/matrix.js') }}"></script>
-<script src="{{ asset('js/usuario/matrix.tables.js') }}"></script>
+<script src="{{ asset('js/usuario/js/jquery.min.js') }}"></script>
+<script src="{{ asset('js/usuario/js/jquery.ui.custom.js') }}"></script>
+<script src="{{ asset('js/usuario/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('js/usuario/js/jquery.uniform.js') }}"></script>
+<script src="{{ asset('js/usuario/js/select2.min.js') }}"></script>
+<script src="{{ asset('js/usuario/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('js/usuario/js/matrix.js') }}"></script>
+<script src="{{ asset('js/usuario/js/matrix.tables.js') }}"></script>
+
+
+
 </body>
 </html>

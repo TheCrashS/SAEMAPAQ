@@ -1,57 +1,100 @@
 @extends('layouts.app')
-@section('content')
 
+@section('content')
 <div class="container-fluid">
     <div class="row justify-content-center">
-        <div class="col-md">
+        <div class="col-md-8">
             <div class="card shadow">
-                <div class="card-header h5 font-weight-bold">{{ __('Lecturaciones') }}</div>
+                <div class="card-header h5 font-weight-bold">{{ __('Lecturacion') }}</div>
 
                 <div class="card-body">
-                    @if (Session::has('msj'))
-                        <div class="alert alert-info" role="alert">
-                            {{  Session::get('msj') }}
-                        </div>
-                    @endif
                     @include('flash::message')
-                    <div class="row justify-content-between">
-                        <div class="col-sm-4">
-                             <a class="btn btn-outline-success" href="{{ route('contribuyente.create') }}"><i class="fas fa-clipboard-list fa-lg fa-fw"></i>&nbsp;{{ __('Register') }}</a>
-                        </div>
-                        <div class="col-sm-8">
-                            {!! Form::open(['method' => 'GET', 'route' => 'contribuyente.index']) !!}
-                                @csrf
-                                <div class="input-group{{ $errors->has('codigo') ? ' has-error' : '' }}">
-                                    {!! Form::text('codigo', null, ['class' => 'form-control','placeholder'=>'Buscar por Numero de Medidor...']) !!}
-                                    <span class="input-group-append">
-                                        <button class="btn btn-warning" type="submit">
-                                            <i class="fas fa-search fa-fw"></i>
-                                        </button>
-                                    </span>
-                                    @if ($errors->has('ci'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('codigo') }}</strong>
-                                        </span>
-                                    @endif
 
-                                </div>
-                            {!! Form::close() !!}
-                        </div>
-                    </div>
                     <hr>
-                    <div class="text-right text-info">
-                       {{ __('Register') }}s
-                    </div>
-                    <div class="text-center">
-                        {{-- {!! $users->render() !!} --}}
-                        {!! $contris->links() !!}
-                    </div>
-                    <div class="text-center">
-                        Página {!!$contris->currentPage()!!} de {!!$contris->lastPage()!!}
-                    </div>
+                    <form method="POST" action="{{ route('lecturacion.create') }}">
+                        @csrf
+                        <div class="form-group row">
+                            <label for="n_cc" class="col-md-4 col-form-label text-md-right">{{ __('Codigo del medidor') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="n_cc" type="text" class="form-control{{ $errors->has('codigo') ? ' is-invalid' : '' }}" name="codigo" value="{{ old('codigo') }}" required autofocus>
+                                @if ($errors->has('codigo'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('codigo') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                            <div class="form-group row mb-0">
+                            <div class="col-md-2 offset-md-4">
+                                <button id="enviar" type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save fa-lg"></i>&nbsp;{{ ('Buscar') }}
+                                </button>
+                            </div>
+                        </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="consumo" class="col-md-4 col-form-label text-md-right">{{ __('Consumo') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="autoridad" type="number" class="form-control{{ $errors->has('consumo') ? ' is-invalid' : '' }}" name="consumo" value="{{ old('consumo') }}" required autofocus>
+                                @if ($errors->has('consumo'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('consumo') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                           <div class="form-group row mb-0">
+                            <div class="col-md-2 offset-md-4">
+                                <button id="enviar" type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save fa-lg"></i>&nbsp;{{ __('Guardar') }}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
 @endsection
+
+@push('scripts')
+    <script>
+        $('form').submit(function (e) {
+            $("#enviar").attr("disabled", true);
+            return true;
+        });
+        $('#modalB').click(function (e) {
+            e.preventDefault();
+            $('#confirmar').modal('show');
+        });
+        function borrar () {
+            event.preventDefault();
+            document.getElementById("destroy-form").submit();
+            $('#confirmar').modal('hide');
+        };
+
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function() {
+            'use strict';
+            window.addEventListener('load', function() {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function(form) {
+                form.addEventListener('submit', function(event) {
+                if (form.checkValidity() === false) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+                }, false);
+            });
+            }, false);
+        })();
+    </script>
+
+@endpush

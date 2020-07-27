@@ -23,8 +23,10 @@ Route::resource('contribuyente', 'ContribuyenteController');
 Route::resource('medidor', 'MedidorController');
 Route::resource('lecturacion', 'LecturacionController');
 Route::resource('user', 'UserController');
-Route::resource('cobro', 'CobroController');
 Route::resource('parametro','ParametroController');
+
+Route::resource('cobro', 'CobroController');
+//Route::post('cobro/{id}', 'CobroController@pdf')->name('pdf');
 
 //rutas generadas para la autenticación
 Auth::routes();

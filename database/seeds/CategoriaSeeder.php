@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-Use app\categoria;
+Use App\Categoria;
 class CategoriaSeeder extends Seeder
 {
     /**
@@ -11,6 +11,21 @@ class CategoriaSeeder extends Seeder
      */
     public function run()
     {
-        //
+        $categoria= new Categoria ();
+        $categoria->nombre='Domiciliario';
+        $categoria->tarifa=15;
+        $categoria->save();
+
+        $categoria= new Categoria();
+        $categoria->nombre='Comercial';
+        $categoria->tarifa=18.5;
+        $categoria->save();
+
+        $categoria= new Categoria();
+        $categoria->nombre='Empresarial';
+        $categoria->tarifa=15;
+        $categoria->save();
+
+
     }
 }

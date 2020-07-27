@@ -74,7 +74,7 @@ class MedidorSeeder extends Seeder
         $medidor->val_3=' ';
         $medidor->direccion='Calle Millares #33';
         $medidor->contribuyente_id=5;
-        $medidor->categoria_id=2;
+        $medidor->categoria_id=3;
         $medidor->save();
 
 

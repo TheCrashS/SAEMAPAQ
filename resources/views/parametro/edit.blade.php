@@ -18,6 +18,19 @@
                     <form method="GET" action="{{ route('parametro.index' ) }}">
                         @method('GET')
                         @csrf
+
+                        <div class="form-group row">
+                            <label for="UFV" class="col-md-4 col-form-label text-md-right">{{ __('UFV') }}</label>
+                            <div class="col-md-6">
+                                <input id="UFV" type="number" class="form-control{{ $errors->has('UFV') ? ' is-invalid' : '' }}" name="UFV" value="{{  $param->UFV }}"  required autofocus>
+                                @if ($errors->has('UFV'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('UFV') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
                         <div class="form-group row">
                             <label for="domiciliar" class="col-md-4 col-form-label text-md-right">{{ __('Tarifa domiciliar por cada 1000 L') }}</label>
 

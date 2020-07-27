@@ -19,7 +19,7 @@
                              <a class="btn btn-outline-success" href="{{ route('contribuyente.create') }}"><i class="fas fa-clipboard-list fa-lg fa-fw"></i>&nbsp;{{ __('Register') }}</a>
                         </div>
                         <div class="col-sm-8">
-                            {!! Form::open(['method' => 'GET', 'route' => 'contribuyente.index']) !!}
+                            {!! Form::open(['method' => 'GET', 'route' => 'cobro.index']) !!}
                                 @csrf
                                 <div class="input-group{{ $errors->has('ci') ? ' has-error' : '' }}">
                                     {!! Form::text('ci', null, ['class' => 'form-control','placeholder'=>'Buscar por Nº CI...']) !!}
@@ -46,6 +46,8 @@
                         <table class="table table-sm table-striped table-hover">
                             <thead>
                                 <th class="text-capitalize " scope="col">{{ __('ID') }}</th>
+                                <th class="text-capitalize " scope="col">{{ __('Nombres') }}</th>
+                                <th class="text-capitalize " scope="col">{{ __('Apellidos') }}</th>
                                 <th class="text-capitalize " scope="col">{{ __('CI') }}</th>
                                 <th class="text-capitalize " scope="col">{{ __('Estado') }}</th>
                                 <th class="text-capitalize " scope="col">{{ __('Acciones') }}</th>
@@ -54,20 +56,21 @@
                                 @foreach ($cobros as $cobro)
                                     <tr>
                                         <th scope="row">{{ $cobro->id}}</th>
+                                        <td>{{ $cobro->nombres }}</td>
+                                        <td>{{ $cobro->apellidos }}</td>
                                         <td>{{ $cobro->ci }}</td>
                                         <td>
-                                            @if ($cobro->estado == '1')
-                                                <span class="badge badge-warning" >{{ __('Enabled') }}</span>
+                                            @if ($cobro->estado_pago == '1')
+                                                <span class="badge badge-success" >{{ __('Pagó') }}</span>
                                             @else
-                                                <span class="badge badge-success" >{{ __('Disabled') }}</span>
+                                                <span class="badge badge-warning" >{{ __('Deuda') }}</span>
                                             @endif
                                         </td>
                                         <td>
                                             <div style="width: 132px;">
-                                                <a href="{{route('contribuyente.show',$correo->id)}}" class="btn btn-info btn-sm"><span style="color:white"><i class="far fa-eye fa-lg fa-fw"></i></span></a>&nbsp;
-                                                <a href="{{route('contribuyente.edit',$correo)}}" class="btn btn-warning btn-sm"><span style="color:white"><i class="fas fa-edit fa-lg fa-fw"></i></span></a>
-                                                {{-- @if ($correo->correspondencia->registro_id != 1 ) --}}
-                                                &nbsp;<a href="{{ route('contribuyente.pdf',$correo->id) }}" target="_blank" class="btn btn-secondary btn-sm"><span style="color:white"><i class="fas fa-file-pdf fa-lg fa-fw"></i></span></a>
+                                                <a href="{{route('cobro.show',$cobro->id)}}" class="btn btn-info btn-sm"><span style="color:white"><i class="far fa-eye fa-lg fa-fw"></i></span></a>&nbsp;
+                                                <a href="{{route('cobro.edit',$cobro)}}" class="btn btn-warning btn-sm"><span style="color:white"><i class="fas fa-edit fa-lg fa-fw"></i></span></a>
+                                                {{-- &nbsp;<a href="{{ route('cobro.pdf',$cobro->id) }}" target="_blank" class="btn btn-secondary btn-sm"><span style="color:white"><i class="fas fa-file-pdf fa-lg fa-fw"></i></span></a> --}}
                                             </div>
                                         </td>
                                     </tr>
