@@ -10,7 +10,11 @@ class Lecturacion extends Model
     protected $fillable = [
         'fecha_lectura',
         'consumo',
-        'medidor_id'
+        'medidor_id',
+        'monto',
+        'fecha_cobro',
+        'estado_pago'
+
     ];
 
 }

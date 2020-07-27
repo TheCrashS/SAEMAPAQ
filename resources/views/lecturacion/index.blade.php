@@ -1,51 +1,54 @@
 @extends('layouts.app')
-
 @section('content')
-<div class="container">
+
+<div class="container-fluid">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Lecturacion') }}</div>
+        <div class="col-md">
+            <div class="card shadow">
+                <div class="card-header h5 font-weight-bold">{{ __('Lecturaciones') }}</div>
 
                 <div class="card-body">
-                    <form method="GET" action="{{ route('lecturacion.index')}} ">
-                        @csrf
-
-                        <div class="form-group row">
-                            <label for="consumo" class="col-md-4 col-form-label text-md-right">{{ __('consumo') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="consumo" type="number" class="form-control " name="consumo"  required autocomplete="consumo" autofocus>
-                            </div>
+                    @if (Session::has('msj'))
+                        <div class="alert alert-info" role="alert">
+                            {{  Session::get('msj') }}
                         </div>
-                        <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Lecturacion') }}
-                                </button>
-
-
-                            </div>
+                    @endif
+                    @include('flash::message')
+                    <div class="row justify-content-between">
+                        <div class="col-sm-4">
+                             <a class="btn btn-outline-success" href="{{ route('contribuyente.create') }}"><i class="fas fa-clipboard-list fa-lg fa-fw"></i>&nbsp;{{ __('Register') }}</a>
                         </div>
-                    </form>
-                    <form method="POST" action="{{ route('lecturacion.index') }}">
-                        @csrf
+                        <div class="col-sm-8">
+                            {!! Form::open(['method' => 'GET', 'route' => 'contribuyente.index']) !!}
+                                @csrf
+                                <div class="input-group{{ $errors->has('codigo') ? ' has-error' : '' }}">
+                                    {!! Form::text('codigo', null, ['class' => 'form-control','placeholder'=>'Buscar por Numero de Medidor...']) !!}
+                                    <span class="input-group-append">
+                                        <button class="btn btn-warning" type="submit">
+                                            <i class="fas fa-search fa-fw"></i>
+                                        </button>
+                                    </span>
+                                    @if ($errors->has('ci'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('codigo') }}</strong>
+                                        </span>
+                                    @endif
 
-                        <div class="form-group row">
-                            <label for="consumo" class="col-md-4 col-form-label text-md-right">{{ __('consumo') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="consumo" type="number" class="form-control  " name="consumo"  required autocomplete="consumo" autofocus>
-                            </div>
+                                </div>
+                            {!! Form::close() !!}
                         </div>
-                        <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Lecturacion') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                    </div>
+                    <hr>
+                    <div class="text-right text-info">
+                       {{ __('Register') }}s
+                    </div>
+                    <div class="text-center">
+                        {{-- {!! $users->render() !!} --}}
+                        {!! $contris->links() !!}
+                    </div>
+                    <div class="text-center">
+                        Página {!!$contris->currentPage()!!} de {!!$contris->lastPage()!!}
+                    </div>
                 </div>
             </div>
         </div>

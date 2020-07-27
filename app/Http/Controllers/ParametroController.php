@@ -21,7 +21,8 @@ class ParametroController extends Controller
 
     public function index()
     {
-        return view('parametro.index');
+        $param = new Parametro();
+        return view('parametro.edit')->with('param',$param);
     }
 
     /**

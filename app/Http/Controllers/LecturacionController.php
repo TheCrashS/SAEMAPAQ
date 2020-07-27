@@ -18,9 +18,12 @@ class LecturacionController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return view('lecturacion.index');
+        /* $lecturas = Lecturacion::join('lecturacion.medidor_id','=','medidor.medidor_id')->
+        join('medidor.contribuyente_id','=','contribuyente.contribuyente_id')->
+        select('contribuyente.id','contribuyente.nombres','contribuyente.apellidos','contribuyente.ci','lectura.consumo'); */
+        return view('lecturacion.index');//->with('cobros',$lecturas);
     }
 
     /**
@@ -64,6 +67,7 @@ class LecturacionController extends Controller
     public function edit(Lecturacion $lecturacion)
     {
         //
+        return view('lecturacion.edit');
     }
 
     /**

@@ -32,6 +32,8 @@ class ContribuyenteController extends Controller
     public function create()
     {
         //
+
+
         /* $table->string('nombres');
         $table->string('apellidos');
         $table->integer('ci');
@@ -77,6 +79,7 @@ class ContribuyenteController extends Controller
         //
         //$contri = $contribuyente;  //test1
         $contri = Contribuyente::find($contribuyente->id);  //test2
+
         return view('contribuyente.edit')->with('contri',$contri);
     }
 
