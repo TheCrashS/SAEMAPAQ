@@ -16,7 +16,6 @@
                     @include('flash::message')
                     <div class="row justify-content-between">
                         <div class="col-sm-4">
-                             <a class="btn btn-outline-success" href="{{ route('contribuyente.create') }}"><i class="fas fa-clipboard-list fa-lg fa-fw"></i>&nbsp;{{ __('Register') }}</a>
                         </div>
                         <div class="col-sm-8">
                             {!! Form::open(['method' => 'GET', 'route' => 'cobro.index']) !!}
@@ -49,6 +48,7 @@
                                 <th class="text-capitalize " scope="col">{{ __('Nombres') }}</th>
                                 <th class="text-capitalize " scope="col">{{ __('Apellidos') }}</th>
                                 <th class="text-capitalize " scope="col">{{ __('CI') }}</th>
+                                <th class="text-capitalize " scope="col">{{ __('Fecha Lecturación') }}</th>
                                 <th class="text-capitalize " scope="col">{{ __('Estado') }}</th>
                                 <th class="text-capitalize " scope="col">{{ __('Acciones') }}</th>
                             </thead>
@@ -59,6 +59,7 @@
                                         <td>{{ $cobro->nombres }}</td>
                                         <td>{{ $cobro->apellidos }}</td>
                                         <td>{{ $cobro->ci }}</td>
+                                        <td>{{ $cobro->fecha_lectura }}</td>
                                         <td>
                                             @if ($cobro->estado_pago == '1')
                                                 <span class="badge badge-success" >{{ __('Pagó') }}</span>
@@ -68,12 +69,57 @@
                                         </td>
                                         <td>
                                             <div style="width: 132px;">
-                                                <a href="{{route('cobro.show',$cobro->id)}}" class="btn btn-info btn-sm"><span style="color:white"><i class="far fa-eye fa-lg fa-fw"></i></span></a>&nbsp;
-                                                <a href="{{route('cobro.edit',$cobro)}}" class="btn btn-warning btn-sm"><span style="color:white"><i class="fas fa-edit fa-lg fa-fw"></i></span></a>
+                                                <button type="button" class="btn btn-success" id="modalB" data-toggle="modal" data-target="#confirmar_{{$cobro->id}}">
+                                                    <span style="color:white">{{ __('Pagar') }}&nbsp;<i class="fas fa-hand-holding-usd fa-lg"></i></span>
+                                                </button>
+                                                {{-- <a href="{{route('cobro.show',$cobro->id)}}" class="btn btn-info btn-sm"><span style="color:white"><i class="far fa-eye fa-lg fa-fw"></i></span></a>&nbsp;
+                                                <a href="{{route('cobro.edit',$cobro)}}" class="btn btn-warning btn-sm"><span style="color:white"><i class="fas fa-edit fa-lg fa-fw"></i></span></a> --}}
                                                 {{-- &nbsp;<a href="{{ route('cobro.pdf',$cobro->id) }}" target="_blank" class="btn btn-secondary btn-sm"><span style="color:white"><i class="fas fa-file-pdf fa-lg fa-fw"></i></span></a> --}}
                                             </div>
                                         </td>
                                     </tr>
+
+                                    <!-- Modal -->
+                                <div class="modal fade" id="confirmar_{{ $cobro->id }}" tabindex="-1" role="dialog" aria-labelledby="confirmar" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content shadow">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title text-success" id="modalTitulo"><i class="fas fa-receipt fa-lg"></i>&nbsp;<strong>Facturación - EMAPAQ</strong></h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+
+                                                    Factura del Contribuyente con el Nº de CI: {{ $cobro->ci }} <br>
+                                                    en base a cancelación del el servicio básico de agua. <br>
+                                                    Detalle <br>
+                                                    Nº de Medidor: {{ $cobro->codigo }} <br>
+                                                    Fecha de Lecturación: {{$cobro->fecha_lectura}} <br>
+                                                    Fecha de Facturación: {{now()->toDateString()}} <br>
+                                                    Monto de Cobro: <strong> {{$cobro->monto}} </strong> <br>
+                                                    Categoria de Servicio:
+                                                    @if ($cobro->categoria_id == 1)
+                                                        "Domiciliario"
+                                                    @endif
+                                                    @if ($cobro->categoria_id == 2)
+                                                        "Comercial"
+                                                    @endif
+                                                    @if ($cobro->categoria_id == 3)
+                                                        "Empresarial"
+                                                    @endif
+
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Cancel') }}</button>
+                                                    <a href="{{ route('cobro.pdf',$cobro->id) }}" target="_blank" class="btn btn-success"><span style="color:white"><i class="fas fa-file-pdf fa-lg fa-fw"></i></span></a>
+                                                    {{-- <button type="button" class="btn btn-success" onclick="print()"> {{ __('Print') }} </button> --}}
+                                                    <a href="{{ route('cobro.pagar',$cobro->id) }}" target="_blank" class="btn btn-success"><span style="color:white">PAGO<i class="fas fa-hand-holding-usd fa-lg fa-fw"></i></span></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 @endforeach
                             </tbody>
                         </table>
@@ -86,9 +132,32 @@
                     <div class="text-center">
                         {{-- Página {!!$cobros->currentPage()!!} de {!!$cobros->lastPage()!!} --}}
                     </div>
+
+
+
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
+<script>
+    $('form').submit(function (e) {
+        $("#enviar").attr("disabled", true);
+        return true;
+    });
+    $('#modalB').click(function (e) {
+        e.preventDefault();
+        $('#confirmar').modal('show');
+    });
+
+
+    function pagar (a) {
+        event.preventDefault();
+        document.getElementById(a).submit();
+        $('#confirmar').modal('hide');
+    };
+</script>
+
 @endsection

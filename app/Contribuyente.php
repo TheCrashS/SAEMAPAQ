@@ -16,4 +16,9 @@ class Contribuyente extends Model
         'direccion',
         'estado'
     ];
+
+    public function medidors()
+    {
+        return $this->hasMany(Medidor::class);
+    }
 }

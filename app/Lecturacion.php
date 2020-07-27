@@ -17,4 +17,9 @@ class Lecturacion extends Model
 
     ];
 
+    public function medidor()
+    {
+        return $this->belongsTo(Medidor::class);
+    }
+
 }

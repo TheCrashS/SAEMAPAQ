@@ -25,8 +25,11 @@ Route::resource('lecturacion', 'LecturacionController');
 Route::resource('user', 'UserController');
 Route::resource('parametro','ParametroController');
 
+Route::get('/cobro/pagar/{cobro}','CobroController@pagar')->name('cobro.pagar');
+Route::get('/cobro/pdf/{cobro}','CobroController@pdf')->name('cobro.pdf');
+//Route::post('/cobro/update/{cobro}','CobroController@update')->name('cobro.update');
 Route::resource('cobro', 'CobroController');
-//Route::post('cobro/{id}', 'CobroController@pdf')->name('pdf');
+//Route::post('/cobro/update/{cobro}','CobroController@update')->name('cobro.update');
 
 //rutas generadas para la autenticación
 Auth::routes();

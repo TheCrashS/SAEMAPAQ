@@ -22,7 +22,10 @@ class CheckRol
             return $next($request);
         }
         else
+        {
             abort(401, 'Lo sentimos, esta acción no esta permitida 401');
+        }
+
         return $next($request);
     }
 }

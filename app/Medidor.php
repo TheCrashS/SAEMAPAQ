@@ -17,4 +17,19 @@ class Medidor extends Model
         'contribuyente_id',
         'categoria_id'
     ];
+
+    public function lecturacions()
+    {
+        return $this->hasMany(Lecuracion::class);
+    }
+
+    public function contribuyente()
+    {
+        return $this->belongsTo(Contribuyente::class);
+    }
+
+    public function categoria()
+    {
+        return $this->belongsTo(Categoria::class);
+    }
 }

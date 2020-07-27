@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Cobro;
 use App\Lecturacion;
+use Dompdf\Dompdf;
 use Illuminate\Http\Request;
 
 class CobroController extends Controller
@@ -24,7 +25,7 @@ class CobroController extends Controller
         //
         $lecturas = Lecturacion::join('medidors', 'lecturacions.medidor_id','=','medidors.id')->
         join('contribuyentes','medidors.contribuyente_id','=','contribuyentes.id')->where('contribuyentes.ci','LIKE','%'.$request->ci.'%')->
-        select('contribuyentes.id','contribuyentes.nombres','contribuyentes.apellidos','contribuyentes.ci','lecturacions.consumo')->get();
+        select('contribuyentes.id','contribuyentes.nombres','contribuyentes.apellidos','contribuyentes.ci','lecturacions.consumo','lecturacions.fecha_lectura','medidors.codigo','lecturacions.monto','medidors.categoria_id','lecturacions.estado_pago')->get();
 
         return view('cobro.index')->with('cobros',$lecturas);
     }
@@ -61,9 +62,9 @@ class CobroController extends Controller
         else
         {
             $lecturas = Lecturacion::join('medidors', 'lecturacions.medidor_id','=','medidors.id')->
-            join('contribuyentes','medidors.contribuyente_id','=','contribuyentes.id')->where('contribuyentes.ci','LIKE','%'.$lectura->medidor->contribuyente->ci.'%')->
-            select('contribuyentes.id','contribuyentes.nombres','contribuyentes.apellidos','contribuyentes.ci','lecturacions.consumo')->get();
-
+            join('contribuyentes','medidors.contribuyente_id','=','contribuyentes.id')->
+            where('contribuyentes.ci','LIKE','%'.$lectura->medidor->contribuyente->ci.'%')->
+            select('contribuyentes.id','contribuyentes.nombres','contribuyentes.apellidos','contribuyentes.ci','lecturacions.consumo','lecturacions.fecha_lectura','medidors.codigo','lecturacions.monto','medidors.categoria_id','lecturacions.estado_pago')->get();
             return view('cobro.index')->with('cobros',$lecturas);
         }
 
@@ -98,9 +99,11 @@ class CobroController extends Controller
      * @param  \App\Cobro  $cobro
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Cobro $cobro)
+    public function update()
     {
         //
+        dd('s');
+
     }
 
     /**
@@ -114,8 +117,38 @@ class CobroController extends Controller
         //
     }
 
-    public function pdf(Cobro $cobro)
+    public function pdf($id)
     {
         //
+        $cobro = Lecturacion::find($id);
+        $pdf = new Dompdf();
+        $pdf->set_option('defaultFont', 'Courier');
+        //$pdf->setPaper('letter');
+        $datos = [
+            'cobro' => $cobro
+        ];
+
+        $pdf->loadHtml(view('cobro.pdf')->with($datos));
+        $pdf->render();
+        return $pdf->stream('Factura -'.$cobro->id.'.pdf',['Attachment' => 0]);
+    }
+
+    public function pagar(Request $request, $id)
+    {
+        $cobro = Lecturacion::find($id);
+        $cobro->fecha_cobro = now()->toDateString();
+        $cobro->estado_pago = true;
+
+        if ($cobro->save())
+            flash('Operación enxitosa')->important();
+        else
+            flash('Error')->important();
+
+        $lecturas = Lecturacion::join('medidors', 'lecturacions.medidor_id','=','medidors.id')->
+        join('contribuyentes','medidors.contribuyente_id','=','contribuyentes.id')->where('contribuyentes.ci','LIKE','%'.$request->ci.'%')->
+        select('contribuyentes.id','contribuyentes.nombres','contribuyentes.apellidos','contribuyentes.ci','lecturacions.consumo','lecturacions.fecha_lectura','medidors.codigo','lecturacions.monto','medidors.categoria_id','lecturacions.estado_pago')->get();
+
+
+        return view('cobro.index')->with('cobros',$lecturas);
     }
 }
