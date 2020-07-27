@@ -25,7 +25,7 @@ class CobroController extends Controller
         //
         $lecturas = Lecturacion::join('medidors', 'lecturacions.medidor_id','=','medidors.id')->
         join('contribuyentes','medidors.contribuyente_id','=','contribuyentes.id')->where('contribuyentes.ci','LIKE','%'.$request->ci.'%')->
-        select('contribuyentes.id','contribuyentes.nombres','contribuyentes.apellidos','contribuyentes.ci','lecturacions.consumo','lecturacions.fecha_lectura','medidors.codigo','lecturacions.monto','medidors.categoria_id','lecturacions.estado_pago')->get();
+        select('contribuyentes.id','contribuyentes.nombres','contribuyentes.apellidos','contribuyentes.ci','lecturacions.consumo','lecturacions.fecha_lectura','medidors.codigo','lecturacions.monto','medidors.categoria_id','lecturacions.estado_pago')->orderBy('id')->paginate(5);
 
         return view('cobro.index')->with('cobros',$lecturas);
     }
@@ -99,11 +99,10 @@ class CobroController extends Controller
      * @param  \App\Cobro  $cobro
      * @return \Illuminate\Http\Response
      */
-    public function update()
+    public function update(Request  $request,Cobro  $cobro)
     {
         //
-        dd('s');
-
+        dd('a');
     }
 
     /**
@@ -121,15 +120,16 @@ class CobroController extends Controller
     {
         //
         $cobro = Lecturacion::find($id);
-        $pdf = new Dompdf();
-        $pdf->set_option('defaultFont', 'Courier');
+
+        //$pdf->set_option('defaultFont', 'Courier');
         //$pdf->setPaper('letter');
         $datos = [
             'cobro' => $cobro
         ];
 
-        $pdf->loadHtml(view('cobro.pdf')->with($datos));
-        $pdf->render();
+        $pdf = \PDF::loadView('cobro.pdf', $datos);
+        //$pdf->loadHtml(view('cobro.pdf')->with($datos));
+        //$pdf->render();
         return $pdf->stream('Factura -'.$cobro->id.'.pdf',['Attachment' => 0]);
     }
 
@@ -149,6 +149,7 @@ class CobroController extends Controller
         select('contribuyentes.id','contribuyentes.nombres','contribuyentes.apellidos','contribuyentes.ci','lecturacions.consumo','lecturacions.fecha_lectura','medidors.codigo','lecturacions.monto','medidors.categoria_id','lecturacions.estado_pago')->get();
 
 
-        return view('cobro.index')->with('cobros',$lecturas);
+        return redirect()->route('cobro.index');
+        //return view('cobro.index')->with('cobros',$lecturas);
     }
 }

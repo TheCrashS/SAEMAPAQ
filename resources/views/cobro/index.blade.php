@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md">
             <div class="card shadow">
-                <div class="card-header h5 font-weight-bold">{{ __('Contribuyente') }}</div>
+                <div class="card-header h5 font-weight-bold">{{ __('Cobros') }}</div>
 
                 <div class="card-body">
                     @if (Session::has('msj'))
@@ -39,7 +39,7 @@
                     </div>
                     <hr>
                     <div class="text-right text-info">
-                        {{-- {!!$cobros->total()!!} {{ __('Register') }}s --}}
+                        {{$cobros->total() }} {{ __('Lecturaciones') }}
                     </div>
                     <div class="table-responsive">
                         <table class="table table-sm table-striped table-hover">
@@ -59,17 +59,17 @@
                                         <td>{{ $cobro->nombres }}</td>
                                         <td>{{ $cobro->apellidos }}</td>
                                         <td>{{ $cobro->ci }}</td>
-                                        <td>{{ $cobro->fecha_lectura }}</td>
+                                        <td>{{ Carbon\Carbon::parse($cobro->fecha_lectura)->format('Y-m-d') }}</td>
                                         <td>
                                             @if ($cobro->estado_pago == '1')
                                                 <span class="badge badge-success" >{{ __('Pagó') }}</span>
                                             @else
-                                                <span class="badge badge-warning" >{{ __('Deuda') }}</span>
+                                                <span class="badge badge-danger" >{{ __('Deuda') }}</span>
                                             @endif
                                         </td>
                                         <td>
                                             <div style="width: 132px;">
-                                                <button type="button" class="btn btn-success" id="modalB" data-toggle="modal" data-target="#confirmar_{{$cobro->id}}">
+                                                <button type="button" class="btn btn-success btn-sm" id="modalB" data-toggle="modal" data-target="#confirmar_{{$cobro->id}}">
                                                     <span style="color:white">{{ __('Pagar') }}&nbsp;<i class="fas fa-hand-holding-usd fa-lg"></i></span>
                                                 </button>
                                                 {{-- <a href="{{route('cobro.show',$cobro->id)}}" class="btn btn-info btn-sm"><span style="color:white"><i class="far fa-eye fa-lg fa-fw"></i></span></a>&nbsp;
@@ -112,9 +112,8 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Cancel') }}</button>
-                                                    <a href="{{ route('cobro.pdf',$cobro->id) }}" target="_blank" class="btn btn-success"><span style="color:white"><i class="fas fa-file-pdf fa-lg fa-fw"></i></span></a>
-                                                    {{-- <button type="button" class="btn btn-success" onclick="print()"> {{ __('Print') }} </button> --}}
-                                                    <a href="{{ route('cobro.pagar',$cobro->id) }}" target="_blank" class="btn btn-success"><span style="color:white">PAGO<i class="fas fa-hand-holding-usd fa-lg fa-fw"></i></span></a>
+                                                    <a href="{{ route('cobro.pdf',$cobro->id) }}" target="_blank" class="btn btn-primary"><span style="color:white"><i class="fas fa-file-pdf fa-lg fa-fw"></i></span></a>
+                                                    <a href="{{ route('cobro.pagar',$cobro->id) }}" target="_blank" class="btn btn-success"><span style="color:white"> <strong>PAGO</strong>&nbsp;<i class="fas fa-hand-holding-usd fa-lg fa-fw"></i></span></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -127,14 +126,11 @@
 
                     <div class="text-center">
                         {{-- {!! $users->render() !!} --}}
-                        {{-- {!! $cobros->links() !!} --}}
+                        {!! $cobros->links() !!}
                     </div>
                     <div class="text-center">
-                        {{-- Página {!!$cobros->currentPage()!!} de {!!$cobros->lastPage()!!} --}}
+                        Página {!!$cobros->currentPage()!!} de {!!$cobros->lastPage()!!}
                     </div>
-
-
-
                 </div>
             </div>
         </div>
@@ -143,10 +139,11 @@
 
 
 <script>
-    $('form').submit(function (e) {
+    /* $('form').submit(function (e) {
         $("#enviar").attr("disabled", true);
         return true;
-    });
+    }); */
+
     $('#modalB').click(function (e) {
         e.preventDefault();
         $('#confirmar').modal('show');

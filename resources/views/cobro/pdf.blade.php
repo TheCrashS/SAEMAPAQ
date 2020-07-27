@@ -1,12 +1,19 @@
-{{-- @php $dias = array("Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sábado"); $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+@php
+//require_once  'dompdf / autoload.inc.php';
+
+$dias = array("Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sábado"); $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
 //$dias[date('w')]; //$meses[date('n')-1]
-@endphp --}}
+
+@endphp
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 
     <title> EMAPAQ </title>
     {{--  --}}<link rel="shortcut icon" href="{{ asset('icon/icono.png') }}" type="image/x-icon">
@@ -62,30 +69,18 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content shadow">
                 <div class="modal-header">
-                    <h5 class="modal-title text-success" id="modalTitulo"><i class="fas fa-receipt fa-lg"></i>&nbsp;<strong>Facturación - EMAPAQ</strong></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
+                    <h2 class="modal-title text-success" id="modalTitulo"><strong>Facturación - EMAPAQ</strong></h2>
                 </div>
                 <div class="modal-body">
 
-                    Factura del Contribuyente con el Nº de CI: {{ $cobro->medidor->contribuyente->ci }} <br>
+                    Factura del Contribuyente con el <strong> Nº de CI: {{ $cobro->medidor->contribuyente->ci }} </strong><br>
                     en base a cancelación del el servicio básico de agua. <br>
-                    Detalle <br>
-                    Nº de Medidor: {{ $cobro->codigo }} <br>
+                    <strong>DETALLE</strong> <br>
+                    Nº de Medidor: {{ $cobro->medidor->codigo }} <br>
                     Fecha de Lecturación: {{$cobro->fecha_lectura}} <br>
                     Fecha de Facturación: {{now()->toDateString()}} <br>
-                    Monto de Cobro: <strong> {{$cobro->monto}} </strong> <br>
-                    Categoria de Servicio:
-                    @if ($cobro->categoria_id == 1)
-                        "Domiciliario"
-                    @endif
-                    @if ($cobro->categoria_id == 2)
-                        "Comercial"
-                    @endif
-                    @if ($cobro->categoria_id == 3)
-                        "Empresarial"
-                    @endif
+                    Monto de Cobro: <strong>Bs. {{$cobro->monto}} </strong> <br>
+                    Categoria de Servicio: {{ $cobro->Medidor->categoria->nombre}}
 
                 </div>
             </div>
